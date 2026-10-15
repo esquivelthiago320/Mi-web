@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond King - Recargas</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-image: url('https://sm.ign.com/t/ign_latam/screenshot/default/free-fire-max-preregistro_prtv.1200.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background-color: rgba(15, 23, 42, 0.90);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #334155;
+        }
+        .back-btn {
+            position: absolute;
+            left: 0;
+            background: none;
+            border: none;
+            color: #a7f3d0;
+            font-size: 28px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .profile-link {
+            position: absolute;
+            right: 0;
+            background: none;
+            border: none;
+            color: #a7f3d0;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .main-header h1 {
+            font-size: 18px;
+            color: #22c55e;
+            margin: 0;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #a7f3d0;
+            margin-bottom: 12px;
+            margin-top: 25px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #22c55e;
+            outline: none;
+        }
+        .error-msg {
+            color: #f87171;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+        .packs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .pack-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .pack-card:hover {
+            border-color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.05);
+        }
+        .pack-card.selected {
+            border-color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.15);
+        }
+        .pack-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .pack-price {
+            font-size: 14px;
+            color: #22c55e;
+            font-weight: bold;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 14px;
+            color: #a7f3d0;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+        .btn-confirm {
+            background-color: #22c55e;
+            color: #0b0f19;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: 0.2s;
+        }
+        .btn-confirm.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .whatsapp-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 25px;
+        }
+        .whatsapp-box a {
+            color: #22c55e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Estilos del Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        .modal-content {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .modal-header h2 {
+            font-size: 16px;
+            color: #22c55e;
+            margin: 0;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            color: #f87171;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .profile-info {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+        .profile-info p {
+            margin: 6px 0;
+            color: #cbd5e1;
+        }
+        .result-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: #1e293b;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-header">
+            <a href="#" class="back-btn">&larr;</a>
+            <h1>💥 RECARGAS LATAM 💥</h1>
+            <a href="#" class="profile-link" id="openModal">👤 Mi Cuenta</a>
+        </div>
+
+        <div class="section-title">1. Tu ID de juego</div>
+        <div class="input-group">
+            <!-- input type="text" con inputmode="numeric" para forzar teclado numérico y evitar letras -->
+            <input type="text" id="gameId" inputmode="numeric" pattern="[0-9]*" placeholder="Ingresá tu ID de Jugador (Solo números)">
+            <div id="idError" class="error-msg">⚠️ Ingresá un ID válido (solo números)</div>
+        </div>
+
+        <div class="section-title">2. Elegí tu pack</div>
+        <div class="packs-grid" id="packsGrid">
+            <div class="pack-card" data-title="110 Diamantes" data-price="1650.79"><div class="pack-title">🎁 110 💎</div><div class="pack-price">$1.650,79</div></div>
+            <div class="pack-card" data-title="220 Diamantes" data-price="3274.29"><div class="pack-title">🎁 220 💎</div><div class="pack-price">$3.274,29</div></div>
+            <div class="pack-card" data-title="330 Diamantes" data-price="4825.43"><div class="pack-title">🎁 330 💎</div><div class="pack-price">$4.825,43</div></div>
+            <div class="pack-card" data-title="341 Diamantes" data-price="4996.74"><div class="pack-title">🎁 341 💎</div><div class="pack-price">$4.996,74</div></div>
+            <div class="pack-card" data-title="440 Diamantes" data-price="6584.37"><div class="pack-title">🎁 440 💎</div><div class="pack-price">$6.584,37</div></div>
+            <div class="pack-card" data-title="451 Diamantes" data-price="7269.97"><div class="pack-title">🎁 451 💎</div><div class="pack-price">$7.269,97</div></div>
+            <div class="pack-card" data-title="572 Diamantes" data-price="8352.75"><div class="pack-title">🎁 572 💎</div><div class="pack-price">$8.352,75</div></div>
+            <div class="pack-card" data-title="682 Diamantes" data-price="9549.92"><div class="pack-title">🎁 682 💎</div><div class="pack-price">$9.549,92</div></div>
+            <div class="pack-card" data-title="792 Diamantes" data-price="11531.85"><div class="pack-title">🎁 792 💎</div><div class="pack-price">$11.531,85</div></div>
+            <div class="pack-card" data-title="913 Diamantes" data-price="13142.29"><div class="pack-title">🎁 913 💎</div><div class="pack-price">$13.142,29</div></div>
+            <div class="pack-card" data-title="1.023 Diamantes" data-price="14298.02"><div class="pack-title">🎁 1.023 💎</div><div class="pack-price">$14.298,02</div></div>
+            <div class="pack-card" data-title="1.166 Diamantes" data-price="14689.21"><div class="pack-title">🎁 1.166 💎</div><div class="pack-price">$14.689,21</div></div>
+            <div class="pack-card" data-title="2.398 Diamantes" data-price="26589.30"><div class="pack-title">🎁 2.398 💎</div><div class="pack-price">$26.589,30</div></div>
+            <div class="pack-card" data-title="3.564 Diamantes" data-price="39391.01"><div class="pack-title">🎁 3.564 💎</div><div class="pack-price">$39.391,01</div></div>
+            <div class="pack-card" data-title="4.246 Diamantes" data-price="51810.71"><div class="pack-title">🎁 4.246 💎</div><div class="pack-price">$51.810,71</div></div>
+            <div class="pack-card" data-title="5.368 Diamantes" data-price="58907.07"><div class="pack-title">🎁 5.368 💎</div><div class="pack-price">$58.907,07</div></div>
+            <div class="pack-card" data-title="6.160 Diamantes" data-price="64121.04"><div class="pack-title">🎁 6.160 💎</div><div class="pack-price">$64.121,04</div></div>
+            <div class="pack-card" data-title="Pase Booyah" data-price="3250.00"><div class="pack-title">🎟️ Pase Booyah</div><div class="pack-price">$3.250,00</div></div>
+            <div class="pack-card" data-title="Tarjeta Semanal" data-price="7500.00"><div class="pack-title">🔖 Tarjeta Semanal</div><div class="pack-price">$7.500,00</div></div>
+            <div class="pack-card" data-title="Tarjeta Mensual" data-price="16800.00"><div class="pack-title">🔖 Tarjeta Mensual</div><div class="pack-price">$16.800,00</div></div>
+        </div>
+        <div id="packError" class="error-msg">⚠️ Seleccioná un paquete</div>
+
+        <div class="section-title">📧 Datos de contacto</div>
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Correo electrónico">
+        </div>
+        <div class="input-group">
+            <input type="tel" id="phone" placeholder="Número de teléfono / WhatsApp">
+        </div>
+
+        <div class="footer-note">
+            💰 Precios exclusivos y entregas rápidas y seguras. ⚡
+        </div>
+
+        <button id="btnPay" class="btn-confirm">IR A PAGAR</button>
+
+        <div class="whatsapp-box">
+            <a href="https://whatsapp.com/channel/0029VbDyRyU8kyyOaUfW0s2B" target="_blank">💬 Unirte a nuestro Canal / Grupo de WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- Ventana Modal de Mi Cuenta -->
+    <div class="modal-overlay" id="accountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>👤 Mi Cuenta</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="profile-info">
+                <p><strong>Correo:</strong> <span id="modalEmail">usuario@gmail.com</span></p>
+                <p><strong>Estado:</strong> <span style="color: #22c55e;">Activa</span></p>
+                <p><strong>Verificación:</strong> <span style="color: #22c55e;">Verificado ✅</span></p>
+                <p><strong>Teléfono:</strong> <span id="modalPhone">No cargado</span></p>
+            </div>
+            <div class="section-title" style="margin-top: 10px;">🔍 Buscar estado de recarga</div>
+            <div class="input-group">
+                <input type="text" id="searchCode" placeholder="Ingresá N° de pedido o referencia">
+            </div>
+            <button class="btn-confirm active" id="btnSearch" style="padding: 12px; font-size: 14px;">Buscar Estado</button>
+            <div class="result-box" id="searchResult"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPack = null;
+        const gameIdInput = document.getElementById('gameId');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const packs = document.querySelectorAll('.pack-card');
+        const btnPay = document.getElementById('btnPay');
+        const idError = document.getElementById('idError');
+        const packError = document.getElementById('packError');
+
+        const openModal = document.getElementById('openModal');
+        const closeModal = document.getElementById('closeModal');
+        const accountModal = document.getElementById('accountModal');
+        const modalEmail = document.getElementById('modalEmail');
+        const modalPhone = document.getElementById('modalPhone');
+        const searchCode = document.getElementById('searchCode');
+        const btnSearch = document.getElementById('btnSearch');
+        const searchResult = document.getElementById('searchResult');
+
+        openModal.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalEmail.textContent = emailInput.value.trim() || 'usuario@gmail.com';
+            modalPhone.textContent = phoneInput.value.trim() || 'No cargado';
+            accountModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            accountModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === accountModal) {
+                accountModal.style.display = 'none';
+            }
+        });
+
+        btnSearch.addEventListener('click', () => {
+            const code = searchCode.value.trim();
+            if (code !== '') {
+                searchResult.style.display = 'block';
+                searchResult.innerHTML = `<strong>Pedido:</strong> ${code}<br><strong>Estado:</strong> <span style="color: #22c55e;">En proceso / Verificando pago 🔄</span>`;
+            } else {
+                searchResult.style.display = 'block';
+                searchResult.innerHTML = `<span style="color: #f87171;">⚠️ Por favor ingresá un código válido.</span>`;
+            }
+        });
+
+        packs.forEach(pack => {
+            pack.addEventListener('click', () => {
+                packs.forEach(p => p.classList.remove('selected'));
+                pack.classList.add('selected');
+                selectedPack = {
+                    title: pack.dataset.title,
+                    price: pack.dataset.price
+                };
+                packError.style.display = 'none';
+                checkForm();
+            });
+        });
+
+        // Forzar solo números en el ID de juego mediante JavaScript
+        gameIdInput.addEventListener('input', () => {
+            gameIdInput.value = gameIdInput.value.replace(/[^0-9]/g, '');
+            if (gameIdInput.value.trim() !== '') {
+                idError.style.display = 'none';
+            }
+            checkForm();
+        });
+        
+        emailInput.addEventListener('input', checkForm);
+        phoneInput.addEventListener('input', checkForm);
+
+        function checkForm() {
+            const isIdValid = gameIdInput.value.trim() !== '';
+            const isPackValid = selectedPack !== null;
+            const isEmailValid = emailInput.value.trim() !== '';
+            const isPhoneValid = phoneInput.value.trim() !== '';
+
+            if (isIdValid && isPackValid && isEmailValid && isPhoneValid) {
+                btnPay.classList.add('active');
+            } else {
+                btnPay.classList.remove('active');
+            }
+        }
+
+        btnPay.addEventListener('click', () => {
+            let isValid = true;
+            if (!gameIdInput.value.trim()) {
+                idError.style.display = 'block';
+                isValid = false;
+            }
+            if (!selectedPack) {
+                packError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                localStorage.setItem('gameId', gameIdInput.value.trim());
+                localStorage.setItem('packTitle', selectedPack.title);
+                localStorage.setItem('packPrice', selectedPack.price);
+                localStorage.setItem('userEmail', emailInput.value.trim());
+                localStorage.setItem('userPhone', phoneInput.value.trim());
+                window.location.href = 'Pago.html';
+            }
+        });
+    </script>
+</body>
+</html>

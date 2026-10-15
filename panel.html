@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: rgba(15, 23, 42, 0.90);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 { font-size: 24px; color: #22c55e; text-align: center; margin-bottom: 30px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .stat-value { font-size: 22px; font-weight: bold; color: #a7f3d0; }
+        .stat-label { font-size: 12px; color: #94a3b8; margin-top: 5px; }
+        .order-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .order-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+        .order-info p { margin: 4px 0; color: #cbd5e1; }
+        .order-info strong { color: #ffffff; }
+        .order-status {
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .status-process { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+        .status-completed { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .status-canceled { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .status-refunded { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .status-error { background: rgba(107, 114, 128, 0.15); color: #6b7280; }
+        .update-section {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        select {
+            background: #0b0f19;
+            color: #ffffff;
+            border: 1px solid #334155;
+            padding: 6px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        button {
+            background-color: #22c55e;
+            color: #0b0f19;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Administración</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalOrders">0</div>
+                <div class="stat-label">Total Pedidos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="pendingOrders">0</div>
+                <div class="stat-label">En Proceso</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completedOrders">0</div>
+                <div class="stat-label">Completados</div>
+            </div>
+        </div>
+
+        <div id="ordersList">
+            <!-- Los pedidos se cargarán aquí -->
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo (simulando base de datos)
+        const orders = [
+            { id: 'REC-353766', userId: '8275599728', pack: '110 Diamantes', price: '$1.650,79', phone: '1165972846', status: 'process' },
+            { id: 'REC-97041784', userId: '456789123', pack: 'Pase Booyah', price: '$3.250,00', phone: '1122334455', status: 'completed' },
+            { id: 'REC-26088863', userId: '789456123', pack: 'Tarjeta Semanal', price: '$7.500,00', phone: '1199887766', status: 'canceled' }
+        ];
+
+        function renderOrders() {
+            const ordersList = document.getElementById('ordersList');
+            const totalOrders = document.getElementById('totalOrders');
+            const pendingOrders = document.getElementById('pendingOrders');
+            const completedOrders = document.getElementById('completedOrders');
+
+            ordersList.innerHTML = '';
+            let total = orders.length;
+            let pending = 0;
+            let completed = 0;
+
+            orders.forEach(order => {
+                if (order.status === 'process') pending++;
+                if (order.status === 'completed') completed++;
+
+                let statusClass = `status-${order.status}`;
+                let statusText = {
+                    process: 'En Proceso 🔄',
+                    completed: 'Completado ✅',
+                    canceled: 'Cancelado ❌',
+                    refunded: 'Reembolsado 💰',
+                    error: 'Error ⚠️'
+                }[order.status];
+
+                const card = document.createElement('div');
+                card.className = 'order-card';
+                card.innerHTML = `
+                    <div class="order-details">
+                        <div class="order-info">
+                            <p><strong>Pedido:</strong> ${order.id}</p>
+                            <p><strong>ID Jugador:</strong> ${order.userId}</p>
+                            <p><strong>Pack:</strong> ${order.pack}</p>
+                            <p><strong>Precio:</strong> ${order.price}</p>
+                            <p><strong>Tel:</strong> ${order.phone}</p>
+                        </div>
+                        <div>
+                            <div class="order-status ${statusClass}">${statusText}</div>
+                            <div class="update-section">
+                                <select id="status-${order.id}">
+                                    <option value="process" ${order.status === 'process' ? 'selected' : ''}>En Proceso</option>
+                                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completado</option>
+                                    <option value="canceled" ${order.status === 'canceled' ? 'selected' : ''}>Cancelado</option>
+                                    <option value="refunded" ${order.status === 'refunded' ? 'selected' : ''}>Reembolsado</option>
+                                    <option value="error" ${order.status === 'error' ? 'selected' : ''}>Error</option>
+                                </select>
+                                <button onclick="updateStatus('${order.id}')">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(card);
+            });
+
+            totalOrders.textContent = total;
+            pendingOrders.textContent = pending;
+            completedOrders.textContent = completed;
+        }
+
+        function updateStatus(orderId) {
+            const selectElement = document.getElementById(`status-${orderId}`);
+            const newStatus = selectElement.value;
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                renderOrders();
+                alert(`Estado del pedido ${orderId} actualizado a: ${newStatus}`);
+            }
+        }
+
+        renderOrders();
+    </script>
+</body>
+</html>
