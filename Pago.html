@@ -83,17 +83,19 @@
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
         // Reemplazá con tu configuración exacta de Firebase
-        const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
-        };
+  const firebaseConfig = {
+    apiKey: "AIzaSyAKkDmoLDIU-tLna0M-YAOzJcLhy24HzkM",
+    authDomain: "diamond-king-dc02f.firebaseapp.com",
+    projectId: "diamond-king-dc02f",
+    storageBucket: "diamond-king-dc02f.firebasestorage.app",
+    messagingSenderId: "385403829390",
+    appId: "1:385403829390:web:197951013b9c46e258dddf",
+    measurementId: "G-DGW57ZKDQT"
+  };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
         function copyText(text) {
             navigator.clipboard.writeText(text).then(() => {
