@@ -322,6 +322,7 @@
     </div>
 
     <script>
+
         let selectedPack = null;
         const gameIdInput = document.getElementById('gameId');
         const emailInput = document.getElementById('email');
@@ -426,6 +427,19 @@
                 window.location.href = 'Pago.html';
             }
         });
+      const firebaseConfig = {
+  apiKey: "AIzaSyAKkDmoLDIU-tLna0M-YAOzJcLhy24HzkM",
+  authDomain: "diamond-king-dc02f.firebaseapp.com",
+  projectId: "diamond-king-dc02f",
+  storageBucket: "diamond-king-dc02f.firebasestorage.app",
+  messagingSenderId: "385403829390",
+  appId: "1:385403829390:web:8185759340ee44a858dddf",
+  measurementId: "G-K7FQCF3S2V"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
     </script>
 </body>
 </html>
