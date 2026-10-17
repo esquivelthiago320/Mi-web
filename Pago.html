@@ -202,7 +202,7 @@
         <button class="btn-confirm" onclick="confirmOrder()">Ya pagué, confirmar creando pedido</button>
     </div>
 
-    <script>
+    <script type="module">
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = btnElement.innerText;
