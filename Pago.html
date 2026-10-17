@@ -6,180 +6,54 @@
     <title>Finalizar Pago - Recargas</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            padding: 15px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            max-width: 480px;
-            width: 100%;
-            background-color: rgba(15, 23, 42, 0.95);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .main-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #334155;
-        }
-        .main-header h1 {
-            font-size: 18px;
-            color: #22c55e;
-            margin: 0;
-            letter-spacing: 1px;
-            text-align: center;
-        }
-        .section-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #a7f3d0;
-            margin-bottom: 10px;
-            margin-top: 15px;
-        }
-        .transfer-box {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
-        }
-        .transfer-details {
-            list-style: none;
-            padding: 0;
-        }
-        .transfer-details li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px dashed #334155;
-            font-size: 13px;
-        }
-        .transfer-details li:last-child {
-            border-bottom: none;
-        }
-        .copy-btn {
-            background: #22c55e;
-            color: #0b0f19;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .copy-btn:hover {
-            background: #16a34a;
-        }
-        .input-group {
-            margin-bottom: 15px;
-            position: relative;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            background-color: #0b0f19;
-            color: #ffffff;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-        .input-group input:focus {
-            border-color: #22c55e;
-            outline: none;
-        }
-        .upload-box {
-            border: 2px dashed #334155;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            background: #1e293b;
-            transition: 0.2s;
-        }
-        .upload-box:hover {
-            border-color: #22c55e;
-            background: rgba(34, 197, 94, 0.05);
-        }
-        .upload-box p {
-            font-size: 13px;
-            color: #cbd5e1;
-        }
-        .upload-box span {
-            font-size: 11px;
-            color: #64748b;
-        }
-        #receipt-file {
-            display: none;
-        }
-        .preview-container {
-            margin-top: 15px;
-            text-align: center;
-            display: none;
-        }
-        #receipt-preview {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-        }
-        .btn-confirm {
-            background-color: #22c55e;
-            color: #0b0f19;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            width: 100%;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.2s;
-            margin-top: 15px;
-        }
-        .btn-confirm:hover {
-            background-color: #16a34a;
-        }
+        body { background-color: #0b0f19; color: #ffffff; font-family: Arial, sans-serif; padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .container { max-width: 480px; width: 100%; background-color: rgba(15, 23, 42, 0.95); border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .main-header { display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #334155; }
+        .main-header h1 { font-size: 18px; color: #22c55e; letter-spacing: 1px; text-align: center; }
+        .section-title { font-size: 14px; font-weight: bold; color: #a7f3d0; margin-bottom: 10px; margin-top: 15px; }
+        .transfer-box { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+        .transfer-details { list-style: none; padding: 0; }
+        .transfer-details li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #334155; font-size: 13px; }
+        .transfer-details li:last-child { border-bottom: none; }
+        .copy-btn { background: #22c55e; color: #0b0f19; border: none; padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .copy-btn:hover { background: #16a34a; }
+        .input-group { margin-bottom: 15px; position: relative; }
+        .input-group input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #334155; background-color: #0b0f19; color: #ffffff; font-size: 14px; transition: 0.2s; }
+        .input-group input:focus { border-color: #22c55e; outline: none; }
+        .upload-box { border: 2px dashed #334155; padding: 20px; border-radius: 12px; text-align: center; cursor: pointer; background: #1e293b; transition: 0.2s; }
+        .upload-box:hover { border-color: #22c55e; background: rgba(34, 197, 94, 0.05); }
+        .upload-box p { font-size: 13px; color: #cbd5e1; }
+        .upload-box span { font-size: 11px; color: #64748b; }
+        #receipt-file { display: none; }
+        .preview-container { margin-top: 15px; text-align: center; display: none; }
+        #receipt-preview { max-width: 100%; max-height: 200px; border-radius: 10px; border: 1px solid #334155; }
+        .btn-confirm { background-color: #22c55e; color: #0b0f19; padding: 16px; border: none; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; transition: 0.2s; margin-top: 15px; }
+        .btn-confirm:hover { background-color: #16a34a; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="main-header">
-            <h1>⚡ FINALIZAR COMPRA</h1>
+            <h1>⚡ FINALIZAR COMPRA ⚡</h1>
         </div>
-        
+
         <div class="section-title">Transferencia Directa</div>
         <div class="transfer-box">
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px; text-align: center;">Realizá la transferencia a los siguientes datos y subí tu comprobante.</p>
             <ul class="transfer-details">
                 <li>
                     <span><strong>Titular:</strong> Thiago Alexander Esquivel</span>
                 </li>
                 <li>
                     <span><strong>Alias:</strong> Thiago320.mp</span>
-                    <button class="copy-btn" onclick="copyText('Thiago320.mp', this)">Copiar</button>
+                    <button class="copy-btn" onclick="copyText('Thiago320.mp')">Copiar</button>
                 </li>
                 <li>
                     <span><strong>CBU:</strong> 0000003100093929543686</span>
-                    <button class="copy-btn" onclick="copyText('0000003100093929543686', this)">Copiar</button>
+                    <button class="copy-btn" onclick="copyText('0000003100093929543686')">Copiar</button>
                 </li>
                 <li>
                     <span><strong>CUIL/CUIT:</strong> 20-52334826-7</span>
-                    <button class="copy-btn" onclick="copyText('20-52334826-7', this)">Copiar</button>
+                    <button class="copy-btn" onclick="copyText('20-52334826-7')">Copiar</button>
                 </li>
             </ul>
         </div>
@@ -191,29 +65,42 @@
 
         <div class="section-title">Comprobante de Pago</div>
         <div class="upload-box" onclick="document.getElementById('receipt-file').click()">
-            <p>📷 Hacé clic aquí para subir tu comprobante</p>
+            <p>📁 Hacé clic aquí para subir tu comprobante</p>
             <span>Formatos aceptados: JPG, PNG</span>
-            <input type="file" id="receipt-file" accept="image/*" ="previewReceipt(event)">
         </div>
+        <input type="file" id="receipt-file" accept="image/*">
+
         <div class="preview-container" id="previewContainer">
-            <img id="receipt-preview" alt="Vista previa del comprobante">
+            <div class="section-title">Vista previa del comprobante</div>
+            <img id="receipt-preview" alt="Vista previa">
         </div>
 
         <button class="btn-confirm" onclick="confirmOrder()">Ya pagué, confirmar creando pedido</button>
     </div>
 
-    <script>
-        function copyText(text, btnElement) {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+        // Reemplazá con tu configuración exacta de Firebase
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function copyText(text) {
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = btnElement.innerText;
-                btnElement.innerText = '¡Copiado!';
-                btnElement.style.background = '#10b981';
-                setTimeout(() => {
-                    btnElement.innerText = originalText;
-                    btnElement.style.background = '#22c55e';
-                }, 2000);
+                alert('¡Copiado!');
             });
         }
+        window.copyText = copyText;
 
         function previewReceipt(event) {
             const file = event.target.files[0];
@@ -226,47 +113,40 @@
                 }
                 reader.readAsDataURL(file);
             }
-          document.getElementById('receipt-file').addEventListener('change', previewReceipt);
-
         }
-      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+        document.getElementById('receipt-file').addEventListener('change', previewReceipt);
 
-      function confirmOrder() {
-    const payerName = document.getElementById('payer-name').value.trim();
-    const receiptFile = document.getElementById('receipt-file').files[0];
-    const orderId = 'REC-' + Math.floor(100000 + Math.random() * 900000);
+        async function confirmOrder() {
+            const payerName = document.getElementById('payer-name').value.trim();
+            const receiptFile = document.getElementById('receipt-file').files[0];
+            const orderId = 'REC-' + Math.floor(100000 + Math.random() * 900000);
 
-    if (!payerName) {
-        alert('Por favor, ingresá el nombre y apellido de quien transfiere.');
-        return;
-    }
-    if (!receiptFile) {
-        alert('Por favor, subí el comprobante de pago.');
-        return;
-    }
+            if (!payerName) {
+                alert('Por favor, ingresá el nombre y apellido de quien transfiere.');
+                return;
+            }
+            if (!receiptFile) {
+                alert('Por favor, subí el comprobante de pago.');
+                return;
+            }
 
-    // Guardar en Firestore
-    const db = getFirestore();
-    addDoc(collection(db, "pedidos"), {
-        orderId: orderId,
-        payerName: payerName,
-        receiptFileName: receiptFile.name,
-        fecha: new Date().toISOString(),
-        estado: 'pendiente'
-    }).then(() => {
-        alert('¡Pedido creado con éxito! Gracias por tu compra. Tu código es: ' + orderId);
-      localStorage.setItem('orderId', orderId);
-        window.location.href = 'estado.html';
-    }).catch((error) => {
-      alert(error.message);
-        console.error("Error al guardar el pedido: ", error);
-        alert('Hubo un error al procesar tu pedido. Intentá nuevamente.');
-    });
-}
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+            try {
+                await addDoc(collection(db, "pedidos"), {
+                    orderId: orderId,
+                    payerName: payerName,
+                    receiptFileName: receiptFile.name,
+                    fecha: new Date().toISOString(),
+                    estado: 'pendiente'
+                });
+                alert('Pedido creado con éxito! Gracias por tu compra.');
+                localStorage.setItem('orderId', orderId);
+                window.location.href = 'estado.html';
+            } catch (error) {
+                console.error("Error al guardar el pedido: ", error);
+                alert('Hubo un error al procesar tu pedido. Intentá de nuevo.');
+            }
+        }
+        window.confirmOrder = confirmOrder;
     </script>
 </body>
-            </html>
+</html>
