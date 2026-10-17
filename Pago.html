@@ -227,23 +227,44 @@
                 reader.readAsDataURL(file);
             }
         }
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-        function confirmOrder() {
-            const payerName = document.getElementById('payer-name').value.trim();
-            const receiptFile = document.getElementById('receipt-file').files[0];
+      function confirmOrder() {
+    const payerName = document.getElementById('payer-name').value.trim();
+    const receiptFile = document.getElementById('receipt-file').files[0];
+    const orderId = 'REC-' + Math.floor(100000 + Math.random() * 900000);
 
-            if (!payerName) {
-                alert('Por favor, ingresá el nombre y apellido de quien transfiere.');
-                return;
-            }
-            if (!receiptFile) {
-                alert('Por favor, subí el comprobante de pago.');
-                return;
-            }
+    if (!payerName) {
+        alert('Por favor, ingresá el nombre y apellido de quien transfiere.');
+        return;
+    }
+    if (!receiptFile) {
+        alert('Por favor, subí el comprobante de pago.');
+        return;
+    }
 
-            alert('¡Pedido creado con éxito! Gracias por tu compra.');
-          window.location.href = 'estado.html';
-        }
+    // Guardar en Firestore
+    const db = getFirestore();
+    addDoc(collection(db, "pedidos"), {
+        orderId: orderId,
+        payerName: payerName,
+        receiptFileName: receiptFile.name,
+        fecha: new Date().toISOString(),
+        estado: 'pendiente'
+    }).then(() => {
+        alert('¡Pedido creado con éxito! Gracias por tu compra. Tu código es: ' + orderId);
+      localStorage.setItem('orderId', orderId);
+        window.location.href = 'estado.html';
+    }).catch((error) => {
+      alert(error.message);
+        console.error("Error al guardar el pedido: ", error);
+        alert('Hubo un error al procesar tu pedido. Intentá nuevamente.');
+    });
+}
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
     </script>
 </body>
 </html>
