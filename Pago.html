@@ -193,7 +193,7 @@
         <div class="upload-box" onclick="document.getElementById('receipt-file').click()">
             <p>📷 Hacé clic aquí para subir tu comprobante</p>
             <span>Formatos aceptados: JPG, PNG</span>
-            <input type="file" id="receipt-file" accept="image/*" onchange="previewReceipt(event)">
+            <input type="file" id="receipt-file" accept="image/*" ="previewReceipt(event)">
         </div>
         <div class="preview-container" id="previewContainer">
             <img id="receipt-preview" alt="Vista previa del comprobante">
@@ -202,7 +202,7 @@
         <button class="btn-confirm" onclick="confirmOrder()">Ya pagué, confirmar creando pedido</button>
     </div>
 
-    <script type="module">
+    <script>
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = btnElement.innerText;
@@ -226,6 +226,8 @@
                 }
                 reader.readAsDataURL(file);
             }
+          document.getElementById('receipt-file').addEventListener('change', previewReceipt);
+
         }
       import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
@@ -267,4 +269,4 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
     </script>
 </body>
-</html>
+            </html>
